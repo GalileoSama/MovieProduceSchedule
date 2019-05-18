@@ -172,7 +172,7 @@ public class GreedyTools {
      * @author Jiangliangzhong
      * date 2019/5/18 21:31
     */
-    public SimliarShot calShotAndShotsSimliar(Shot shotSrc, List<Shot> shotDestList){
+    public  static SimliarShot calShotAndShotsSimliar(Shot shotSrc, List<Shot> shotDestList){
         SimliarShot simliarShot = new SimliarShot();
         simliarShot.setShotSrc(shotSrc);
         simliarShot.setShotDest(shotDestList.get(0));
@@ -195,9 +195,11 @@ public class GreedyTools {
      * @param Urgent  每个分镜的紧迫程度
      * @return 返回这个时间段所选择的分镜
     */
-    public List<Shot> selectShotOnTime(List<Shot> shotListOnScene, List<Map<Integer, Float>> Urgent){
-
-
+    public static List<Shot> selectShotOnTime(List<Shot> shotListOnScene, List<Map<Integer, Float>> Urgent){
+        //以分钟为单位
+        int totalTime = 8 * 60;
+        //选择出紧迫度最大的分镜
+//        Map<Integer, Float>
 
         return null;
     }
