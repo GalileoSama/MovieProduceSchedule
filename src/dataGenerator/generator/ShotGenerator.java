@@ -38,7 +38,7 @@ public class ShotGenerator {
             List<Actor_> actorList = new ArrayList<>();
             //添加每个演员到actorList
             for(int i=0;i<actorNum;i++){
-                actorList.add(GlobalVar.getActor_list().get(actorArr[i]));
+                actorList.add(GlobalVar.actor_list.get(actorArr[i]));
             }
             shot.setActorList(actorList);
             //4.随机生成道具数量
@@ -52,12 +52,12 @@ public class ShotGenerator {
             List<Tool_> toolList = new ArrayList<>();
             //添加每个道具到toolList
             for(int i=0;i<toolNum;i++){
-                toolList.add(GlobalVar.getTool_list().get(toolArr[i]));
+                toolList.add(GlobalVar.tool_list.get(toolArr[i]));
             }
             shot.setToolList(toolList);
             //6.随机抽取场景
             int sceneNum = randomOneDigit(0, GlobalVar.TOOLNUM);
-            shot.setScene(GlobalVar.getScene_list().get(sceneNum));
+            shot.setScene(GlobalVar.scene_list.get(sceneNum));
 
             //将生成的分镜添加到分镜list中
             shotList.add(shot);
