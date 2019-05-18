@@ -14,6 +14,12 @@ public class GlobalVar {
     private static List<Actor_> actor_list;
     private static List<Scene_> scene_list;
     private static List<Tool_> tool_list;
+    /**演员数量*/
+    private static final int ACTORNUM = 10;
+    /**场景数量*/
+    private static final int SCENENUM = 5;
+    /**道具数量*/
+    private static final int TOOLNUM = 10;
 
     static {
         //生成演员数据
@@ -49,5 +55,17 @@ public class GlobalVar {
 
     public static List<Tool_> getTool_list() {
         return tool_list;
+    }
+
+    public static int getACTORNUM() {
+        return ACTORNUM;
+    }
+
+    public static int getSCENENUM() {
+        return SCENENUM;
+    }
+
+    public static int getTOOLNUM() {
+        return TOOLNUM;
     }
 }
