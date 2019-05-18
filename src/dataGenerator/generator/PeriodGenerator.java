@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Random;
 
 import static global.GlobalVar.actor_list;
+import static global.GlobalVar.scene_list;
+import static global.GlobalVar.tool_list;
 
 /**
  * 生成时间段
@@ -48,7 +50,7 @@ public class PeriodGenerator {
         List<Actor_> actorList = new ArrayList<>();
         int actorNum = getRandom(10, 1);
         for (int i = 0;i<actorNum;i++){
-            actorList.add(GlobalVar.getActor_list().get(getRandom(10, 1)));
+            actorList.add(actor_list.get(getRandom(10, 1)));
         }
         return actorList;
     }
@@ -57,7 +59,7 @@ public class PeriodGenerator {
         List<Tool_> toolList = new ArrayList<>();
         int toolNum = getRandom(10, 0);
         for (int i = 0;i<toolNum;i++){
-            toolList.add(GlobalVar.getTool_list().get(getRandom(10, 0)));
+            toolList.add(tool_list.get(getRandom(10, 0)));
         }
         return toolList;
     }
@@ -66,7 +68,7 @@ public class PeriodGenerator {
         List<Scene_> sceneList = new ArrayList<>();
         int sceneNum = getRandom(5, 1);
         for (int i = 0;i < sceneNum; i++){
-            sceneList.add(GlobalVar.getScene_list().get(getRandom(5, 1)));
+            sceneList.add(scene_list.get(getRandom(5, 1)));
         }
         return sceneList;
     }
