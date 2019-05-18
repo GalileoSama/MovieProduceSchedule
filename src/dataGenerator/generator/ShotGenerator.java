@@ -4,7 +4,6 @@ import dataGenerator.entity.Actor_;
 import dataGenerator.entity.Tool_;
 import global.GlobalVar;
 import greedyAlgorithm.entity.Shot;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +69,6 @@ public class ShotGenerator {
      * @author Jiangliangzhong
      * date 2019/5/18 16:22
     */
-    @Nullable
     private  int[] randomCommon(int min, int max, int n){
 //        if (n > (max - min + 1) || max < min) {
 //            System.out.println("sdfsdfdsfds");

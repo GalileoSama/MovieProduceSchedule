@@ -16,6 +16,15 @@ public class Shot {
     private List<Actor_> actorList;
     private List<Tool_> toolList;
     private Scene_ scene;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getTime() {
         return time;

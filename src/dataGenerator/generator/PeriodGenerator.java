@@ -1,9 +1,6 @@
 package dataGenerator.generator;
 
-import dataGenerator.entity.Actor_;
-import dataGenerator.entity.Period_;
-import dataGenerator.entity.Scene_;
-import dataGenerator.entity.Tool_;
+import dataGenerator.entity.*;
 import global.GlobalVar;
 
 import java.util.ArrayList;
@@ -29,7 +26,45 @@ public class PeriodGenerator {
         while (today < day){
             Period_ period = new Period_();
             period.setDay(today);
-            period.setActorList(getActorList());
+            //演员
+            List<Actor_> actorList = new ArrayList<>();
+            for (Actor_ actor : actor_list){
+                List<Schedule> scheduleList = actor.getScheduleList();
+                //检查是否有档期 今天
+                for (Schedule schedule : scheduleList){
+                    if (schedule.containDay(today)){
+                        actorList.add(actor);
+                        break;
+                    }
+                }
+            }
+            period.setActorList(actorList);
+            //道具
+            List<Tool_> toolList = new ArrayList<>();
+            for (Tool_ tool : tool_list){
+                List<Schedule> scheduleList = tool.getScheduleList();
+                //检查是否有档期 今天
+                for (Schedule schedule : scheduleList){
+                    if (schedule.containDay(today)){
+                        toolList.add(tool);
+                        break;
+                    }
+                }
+            }
+            period.setToolList(toolList);
+            //场景
+            List<Scene_> sceneList = new ArrayList<>();
+            for (Scene_ scene : scene_list){
+                List<Schedule> scheduleList = scene.getScheduleList();
+                //检查是否有档期 今天
+                for (Schedule schedule : scheduleList){
+                    if (schedule.containDay(today)){
+                        sceneList.add(scene);
+                        break;
+                    }
+                }
+            }
+            period.setSceneList(sceneList);
 
             today++;
         }
@@ -46,34 +81,69 @@ public class PeriodGenerator {
         return random.nextInt(max)%(max-min+1) + min;
     }
 
-    private List<Actor_> getActorList(){
-        List<Actor_> actorList = new ArrayList<>();
-        int actorNum = getRandom(10, 1);
-        for (int i = 0;i<actorNum;i++){
-            actorList.add(actor_list.get(getRandom(10, 1)));
+    /**
+     * 初始化演员、道具、场景的使用期
+     */
+    private void initialSchedule(){
+        //初始化每个演员的档期
+        for (Actor_ actor : actor_list){
+            int scheduleNum = getRandom(20, 10);
+            List<Schedule> schedules = new ArrayList<>();
+            int day = 1;
+            day += getRandom(3, 0);
+            for (int i = 0;i < scheduleNum; i++){
+                Schedule schedule = new Schedule();
+                //设置可工作档期
+                int random = getRandom(30, 7);
+                schedule.setStartTime(day);
+                day += random;
+                schedule.setEndTime(day);
+                //设置不可工作的档期
+                int randomDis = getRandom(20, 2);
+                day += randomDis;
+            }
+            actor.setScheduleList(schedules);
         }
-        return actorList;
-    }
 
-    private List<Tool_> getToolList(){
-        List<Tool_> toolList = new ArrayList<>();
-        int toolNum = getRandom(10, 0);
-        for (int i = 0;i<toolNum;i++){
-            toolList.add(tool_list.get(getRandom(10, 0)));
+        //初始化每个道具的档期
+        for (Tool_ tool : tool_list){
+            int scheduleNum = getRandom(20, 10);
+            List<Schedule> schedules = new ArrayList<>();
+            int day = 1;
+            day += getRandom(3, 0);
+            for (int i = 0;i < scheduleNum; i++){
+                Schedule schedule = new Schedule();
+                //设置可工作档期
+                int random = getRandom(3, 1);
+                schedule.setStartTime(day);
+                day += random;
+                schedule.setEndTime(day);
+                //设置不可工作的档期
+                int randomDis = getRandom(3, 1);
+                day += randomDis;
+            }
+            tool.setScheduleList(schedules);
         }
-        return toolList;
-    }
 
-    private List<Scene_> getSceneList(){
-        List<Scene_> sceneList = new ArrayList<>();
-        int sceneNum = getRandom(5, 1);
-        for (int i = 0;i < sceneNum; i++){
-            sceneList.add(scene_list.get(getRandom(5, 1)));
+        //初始化每个场景的档期
+        for (Scene_ scene : scene_list){
+            int scheduleNum = getRandom(20, 10);
+            List<Schedule> schedules = new ArrayList<>();
+            int day = 1;
+            day += getRandom(3, 0);
+            for (int i = 0;i < scheduleNum; i++){
+                Schedule schedule = new Schedule();
+                //设置可工作档期
+                int random = getRandom(7, 3);
+                schedule.setStartTime(day);
+                day += random;
+                schedule.setEndTime(day);
+                //设置不可工作的档期
+                int randomDis = getRandom(7, 3);
+                day += randomDis;
+            }
+            scene.setScheduleList(schedules);
         }
-        return sceneList;
-    }
-
-    private void initial(){
 
     }
 
