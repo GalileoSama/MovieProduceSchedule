@@ -20,7 +20,7 @@ import static global.GlobalVar.actor_list;
 public class PeriodGenerator {
 
     private List<Period_> periodList = new ArrayList<>();
-    private Random random = new Random();
+    private Random random = new Random(1000);
 
     public List<Period_> generatePeriod(int day){
         int today = 1;
@@ -69,6 +69,10 @@ public class PeriodGenerator {
             sceneList.add(GlobalVar.getScene_list().get(getRandom(5, 1)));
         }
         return sceneList;
+    }
+
+    private void initial(){
+
     }
 
 }
