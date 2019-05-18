@@ -1,15 +1,12 @@
 package dataGenerator.generator;
 
 import dataGenerator.entity.*;
-import global.GlobalVar;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static global.GlobalVar.actor_list;
-import static global.GlobalVar.scene_list;
-import static global.GlobalVar.tool_list;
+import static global.GlobalVar.*;
 
 /**
  * 生成时间段
@@ -66,6 +63,7 @@ public class PeriodGenerator {
             }
             period.setSceneList(sceneList);
 
+            periodList.add(period);
             today++;
         }
         return periodList;
@@ -84,7 +82,7 @@ public class PeriodGenerator {
     /**
      * 初始化演员、道具、场景的使用期
      */
-    private void initialSchedule(){
+    public void initialSchedule(){
         //初始化每个演员的档期
         for (Actor_ actor : actor_list){
             int scheduleNum = getRandom(20, 10);
@@ -101,6 +99,7 @@ public class PeriodGenerator {
                 //设置不可工作的档期
                 int randomDis = getRandom(20, 2);
                 day += randomDis;
+                schedules.add(schedule);
             }
             actor.setScheduleList(schedules);
         }
@@ -114,13 +113,14 @@ public class PeriodGenerator {
             for (int i = 0;i < scheduleNum; i++){
                 Schedule schedule = new Schedule();
                 //设置可工作档期
-                int random = getRandom(3, 1);
+                int random = getRandom(4, 1);
                 schedule.setStartTime(day);
                 day += random;
                 schedule.setEndTime(day);
                 //设置不可工作的档期
-                int randomDis = getRandom(3, 1);
+                int randomDis = getRandom(8, 5);
                 day += randomDis;
+                schedules.add(schedule);
             }
             tool.setScheduleList(schedules);
         }
@@ -141,6 +141,7 @@ public class PeriodGenerator {
                 //设置不可工作的档期
                 int randomDis = getRandom(7, 3);
                 day += randomDis;
+                schedules.add(schedule);
             }
             scene.setScheduleList(schedules);
         }
