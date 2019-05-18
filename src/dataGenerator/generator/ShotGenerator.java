@@ -28,9 +28,9 @@ public class ShotGenerator {
             //1.随机生成时长
             Random random = new Random(1000);//指定种子数字
             //2.随机生成演员数量
-            int actorNum = randomOneDigit(0, GlobalVar.getACTORNUM());
+            int actorNum = randomOneDigit(0, GlobalVar.ACTORNUM);
             //3.随机抽取演员, 在演员编号范围内
-            int[] actorArr = randomCommon(0, GlobalVar.getACTORNUM(), actorNum);
+            int[] actorArr = randomCommon(0, GlobalVar.ACTORNUM, actorNum);
             if(actorArr == null){
                 System.err.println("产生空数组actorArr");
                 return null;
@@ -38,13 +38,13 @@ public class ShotGenerator {
             List<Actor_> actorList = new ArrayList<>();
             //添加每个演员到actorList
             for(int i=0;i<actorNum;i++){
-                actorList.add(GlobalVar.getActor_list().get(actorArr[i]));
+                actorList.add(GlobalVar.actor_list.get(actorArr[i]));
             }
             shot.setActorList(actorList);
             //4.随机生成道具数量
-            int toolNum = randomOneDigit(0, GlobalVar.getTOOLNUM());
+            int toolNum = randomOneDigit(0, GlobalVar.TOOLNUM);
             //5.随机抽取道具
-            int[] toolArr = randomCommon(0, GlobalVar.getTOOLNUM(), toolNum);
+            int[] toolArr = randomCommon(0, GlobalVar.TOOLNUM, toolNum);
             if(toolArr == null){
                 System.err.println("产生空数组toolArr");
                 return null;
@@ -52,12 +52,12 @@ public class ShotGenerator {
             List<Tool_> toolList = new ArrayList<>();
             //添加每个道具到toolList
             for(int i=0;i<toolNum;i++){
-                toolList.add(GlobalVar.getTool_list().get(toolArr[i]));
+                toolList.add(GlobalVar.tool_list.get(toolArr[i]));
             }
             shot.setToolList(toolList);
             //6.随机抽取场景
-            int sceneNum = randomOneDigit(0, GlobalVar.getSCENENUM());
-            shot.setScene(GlobalVar.getScene_list().get(sceneNum));
+            int sceneNum = randomOneDigit(0, GlobalVar.TOOLNUM);
+            shot.setScene(GlobalVar.scene_list.get(sceneNum));
 
             //将生成的分镜添加到分镜list中
             shotList.add(shot);
