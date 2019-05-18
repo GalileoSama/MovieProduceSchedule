@@ -4,6 +4,7 @@ import dataGenerator.entity.Actor_;
 import dataGenerator.entity.Tool_;
 import global.GlobalVar;
 import greedyAlgorithm.entity.Shot;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,7 @@ public class ShotGenerator {
             }
             shot.setToolList(toolList);
             //6.随机抽取场景
-            int sceneNum = randomOneDigit(0, GlobalVar.TOOLNUM);
+            int sceneNum = randomOneDigit(0, GlobalVar.SCENENUM);
             shot.setScene(GlobalVar.scene_list.get(sceneNum));
 
             //将生成的分镜添加到分镜list中
@@ -69,10 +70,12 @@ public class ShotGenerator {
      * @author Jiangliangzhong
      * date 2019/5/18 16:22
     */
-    public static int[] randomCommon(int min, int max, int n){
-        if (n > (max - min + 1) || max < min) {
-            return null;
-        }
+    @Nullable
+    private  int[] randomCommon(int min, int max, int n){
+//        if (n > (max - min + 1) || max < min) {
+//            System.out.println("sdfsdfdsfds");
+//            return null;
+//        }
         int[] result = new int[n];
         int count = 0;
         while(count < n) {
@@ -96,7 +99,7 @@ public class ShotGenerator {
      * @author Jiangliangzhong
      * date 2019/5/18 16:28
     */
-    public static int randomOneDigit(int min, int max){
+    private  int randomOneDigit(int min, int max){
         return (int) (Math.random() * (max - min)) + min;
 
     }

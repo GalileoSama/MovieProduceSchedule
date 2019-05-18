@@ -5,15 +5,16 @@ import dataGenerator.entity.Scene_;
 import dataGenerator.entity.Shot_;
 import dataGenerator.entity.Tool_;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 全部变量，演员，道具，场景
  * */
 public class GlobalVar {
-    public static List<Actor_> actor_list;
-    public static List<Scene_> scene_list;
-    public static List<Tool_> tool_list;
+    public static List<Actor_> actor_list=new ArrayList<>();
+    public static List<Scene_> scene_list=new ArrayList<>();
+    public static List<Tool_> tool_list=new ArrayList<>();
     /**演员数量*/
     public static final int ACTORNUM = 10;
     /**场景数量*/
