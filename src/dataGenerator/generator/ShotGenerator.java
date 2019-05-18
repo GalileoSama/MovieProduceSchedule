@@ -28,9 +28,9 @@ public class ShotGenerator {
             //1.随机生成时长
             Random random = new Random(1000);//指定种子数字
             //2.随机生成演员数量
-            int actorNum = randomOneDigit(0, GlobalVar.getACTORNUM());
+            int actorNum = randomOneDigit(0, GlobalVar.ACTORNUM);
             //3.随机抽取演员, 在演员编号范围内
-            int[] actorArr = randomCommon(0, GlobalVar.getACTORNUM(), actorNum);
+            int[] actorArr = randomCommon(0, GlobalVar.ACTORNUM, actorNum);
             if(actorArr == null){
                 System.err.println("产生空数组actorArr");
                 return null;
@@ -42,9 +42,9 @@ public class ShotGenerator {
             }
             shot.setActorList(actorList);
             //4.随机生成道具数量
-            int toolNum = randomOneDigit(0, GlobalVar.getTOOLNUM());
+            int toolNum = randomOneDigit(0, GlobalVar.TOOLNUM);
             //5.随机抽取道具
-            int[] toolArr = randomCommon(0, GlobalVar.getTOOLNUM(), toolNum);
+            int[] toolArr = randomCommon(0, GlobalVar.TOOLNUM, toolNum);
             if(toolArr == null){
                 System.err.println("产生空数组toolArr");
                 return null;
@@ -56,7 +56,7 @@ public class ShotGenerator {
             }
             shot.setToolList(toolList);
             //6.随机抽取场景
-            int sceneNum = randomOneDigit(0, GlobalVar.getSCENENUM());
+            int sceneNum = randomOneDigit(0, GlobalVar.TOOLNUM);
             shot.setScene(GlobalVar.getScene_list().get(sceneNum));
 
             //将生成的分镜添加到分镜list中
