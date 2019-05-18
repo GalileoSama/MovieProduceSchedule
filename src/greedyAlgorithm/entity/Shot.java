@@ -1,8 +1,9 @@
 package greedyAlgorithm.entity;
 
-import entity.Actor;
-import entity.Scene;
-import entity.Tool;
+
+import dataGenerator.entity.Actor_;
+import dataGenerator.entity.Scene_;
+import dataGenerator.entity.Tool_;
 
 import java.util.List;
 
@@ -12,9 +13,9 @@ import java.util.List;
  */
 public class Shot {
     private int time;
-    private List<entity.Actor> actorList;
-    private List<entity.Tool> toolList;
-    private entity.Scene scene;
+    private List<Actor_> actorList;
+    private List<Tool_> toolList;
+    private Scene_ scene;
 
     public int getTime() {
         return time;
@@ -24,27 +25,27 @@ public class Shot {
         this.time = time;
     }
 
-    public List<Actor> getActorList() {
+    public List<Actor_> getActorList() {
         return actorList;
     }
 
-    public void setActorList(List<Actor> actorList) {
+    public void setActorList(List<Actor_> actorList) {
         this.actorList = actorList;
     }
 
-    public List<Tool> getToolList() {
+    public List<Tool_> getToolList() {
         return toolList;
     }
 
-    public void setToolList(List<Tool> toolList) {
+    public void setToolList(List<Tool_> toolList) {
         this.toolList = toolList;
     }
 
-    public Scene getScene() {
+    public Scene_ getScene() {
         return scene;
     }
 
-    public void setScene(Scene scene) {
+    public void setScene(Scene_ scene) {
         this.scene = scene;
     }
 }
