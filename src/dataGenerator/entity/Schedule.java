@@ -23,4 +23,12 @@ public class Schedule {
     public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
+
+    public boolean containDay(int day){
+        boolean flag = false;
+        if (day >= startTime && day <= endTime){
+            flag = true;
+        }
+        return flag;
+    }
 }
