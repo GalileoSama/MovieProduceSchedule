@@ -18,16 +18,21 @@ public class PeriodGenerator {
     private List<Period_> periodList = new ArrayList<>();
     private Random random = new Random(1000);
 
+    /**
+     * 生成时间段
+     * @param day 生成时间段的总天数
+     * @return 时间段，包含每个时间段可用的演员、特殊道具、场景
+     */
     public List<Period_> generatePeriod(int day){
         int today = 1;
         while (today < day){
             Period_ period = new Period_();
             period.setDay(today);
-            //演员
+            //设置当天的有档期的演员
             List<Actor_> actorList = new ArrayList<>();
             for (Actor_ actor : actor_list){
                 List<Schedule> scheduleList = actor.getScheduleList();
-                //检查是否有档期 今天
+                //检查是否有档期
                 for (Schedule schedule : scheduleList){
                     if (schedule.containDay(today)){
                         actorList.add(actor);
@@ -36,11 +41,11 @@ public class PeriodGenerator {
                 }
             }
             period.setActorList(actorList);
-            //道具
+            //设置当天的可使用的道具
             List<Tool_> toolList = new ArrayList<>();
             for (Tool_ tool : tool_list){
                 List<Schedule> scheduleList = tool.getScheduleList();
-                //检查是否有档期 今天
+                //检查是否有档期
                 for (Schedule schedule : scheduleList){
                     if (schedule.containDay(today)){
                         toolList.add(tool);
@@ -49,11 +54,11 @@ public class PeriodGenerator {
                 }
             }
             period.setToolList(toolList);
-            //场景
+            //设置当天的可使用的场景
             List<Scene_> sceneList = new ArrayList<>();
             for (Scene_ scene : scene_list){
                 List<Schedule> scheduleList = scene.getScheduleList();
-                //检查是否有档期 今天
+                //检查是否有档期
                 for (Schedule schedule : scheduleList){
                     if (schedule.containDay(today)){
                         sceneList.add(scene);
