@@ -8,9 +8,18 @@ import java.util.List;
  * @date 2019/5/18 15:56
  */
 public class Period_ {
+    private int day;
     private List<Actor_> actorList;
     private List<Scene_> sceneList;
     private List<Tool_> toolList;
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
 
     public List<Actor_> getActorList() {
         return actorList;
