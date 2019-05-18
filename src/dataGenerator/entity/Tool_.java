@@ -25,4 +25,18 @@ public class Tool_ {
     public void setId(int id) {
         this.id = id;
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Tool_) {
+            Tool_ obj1= (Tool_) obj;
+            return this.id == obj1.getId();
+        }
+        return false;
+    }
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + id;
+        return result;
+    }
 }

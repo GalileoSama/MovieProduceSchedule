@@ -25,4 +25,19 @@ public class Scene_ {
     public void setId(int id) {
         this.id = id;
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Scene_) {
+            Scene_ obj1= (Scene_) obj;
+            return this.id == obj1.getId();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + id;
+        return result;
+    }
 }
