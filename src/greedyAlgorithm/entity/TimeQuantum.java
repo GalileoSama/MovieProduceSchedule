@@ -12,9 +12,18 @@ import java.util.List;
  * @date 2019/5/1815:16
  */
 public class TimeQuantum {
+    private int day;
     private List<Scene_> sceneList;
     private List<Actor_> actorList;
     private List<Tool_> toolList;
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
 
     public List<Scene_> getSceneList() {
         return sceneList;
