@@ -1,10 +1,10 @@
-package entity;
+package dataGenerator.entity;
 
 /**
  * @author galileo
  * @date 2019/5/18 15:26
  */
-public class Actor {
+public class Actor_ {
     private int id;
 
     public int getId() {

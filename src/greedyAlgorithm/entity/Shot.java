@@ -1,4 +1,4 @@
-package src.entity;
+package greedyAlgorithm.entity;
 
 import entity.Actor;
 import entity.Scene;
@@ -8,19 +8,20 @@ import java.util.List;
 
 /**
  * @author xiang .
- * @date 2019/5/1815:16
+ * @date 2019/5/1815:17
  */
-public class TimeQuantum {
-    private List<entity.Scene> sceneList;
+public class Shot {
+    private int time;
     private List<entity.Actor> actorList;
     private List<entity.Tool> toolList;
+    private entity.Scene scene;
 
-    public List<Scene> getSceneList() {
-        return sceneList;
+    public int getTime() {
+        return time;
     }
 
-    public void setSceneList(List<Scene> sceneList) {
-        this.sceneList = sceneList;
+    public void setTime(int time) {
+        this.time = time;
     }
 
     public List<Actor> getActorList() {
@@ -37,5 +38,13 @@ public class TimeQuantum {
 
     public void setToolList(List<Tool> toolList) {
         this.toolList = toolList;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
     }
 }
