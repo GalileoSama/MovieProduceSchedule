@@ -1,6 +1,7 @@
 package dataGenerator.generator;
 
 import dataGenerator.entity.*;
+import greedyAlgorithm.entity.TimeQuantum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +14,9 @@ import static global.GlobalVar.*;
  * @author galileo
  * @date 2019/5/18 16:02
  */
-public class PeriodGenerator {
+public class TimeQuantumGenerator {
 
-    private List<Period_> periodList = new ArrayList<>();
+    private List<TimeQuantum> periodList = new ArrayList<>();
     private Random random = new Random(1000);
 
     /**
@@ -23,10 +24,10 @@ public class PeriodGenerator {
      * @param day 生成时间段的总天数
      * @return 时间段，包含每个时间段可用的演员、特殊道具、场景
      */
-    public List<Period_> generatePeriod(int day){
+    public List<TimeQuantum> generateTimeQuantum(int day){
         int today = 1;
         while (today < day){
-            Period_ period = new Period_();
+            TimeQuantum period = new TimeQuantum();
             period.setDay(today);
             //设置当天的有档期的演员
             List<Actor_> actorList = new ArrayList<>();
