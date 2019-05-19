@@ -103,7 +103,7 @@ public class TimeQuantumGenerator {
                 day += random;
                 schedule.setEndTime(day);
                 //设置不可工作的档期
-                int randomDis = getRandom(20, 2);
+                int randomDis = getRandom(3, 1);
                 day += randomDis;
                 schedules.add(schedule);
             }
@@ -124,7 +124,7 @@ public class TimeQuantumGenerator {
                 day += random;
                 schedule.setEndTime(day);
                 //设置不可工作的档期
-                int randomDis = getRandom(8, 1);
+                int randomDis = getRandom(3, 1);
                 day += randomDis;
                 schedules.add(schedule);
             }
@@ -145,7 +145,7 @@ public class TimeQuantumGenerator {
                 day += random;
                 schedule.setEndTime(day);
                 //设置不可工作的档期
-                int randomDis = getRandom(7, 1);
+                int randomDis = getRandom(3, 1);
                 day += randomDis;
                 schedules.add(schedule);
             }
