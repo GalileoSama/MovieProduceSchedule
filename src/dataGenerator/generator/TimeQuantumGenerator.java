@@ -1,7 +1,7 @@
 package dataGenerator.generator;
 
 import dataGenerator.entity.*;
-import greedyAlgorithm.entity.TimeQuantum;
+import greedyalgorithm.entity.TimeQuantum;
 
 import java.util.ArrayList;
 import java.util.List;

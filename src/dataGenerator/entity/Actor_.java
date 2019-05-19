@@ -6,7 +6,7 @@ import java.util.List;
  * @author galileo
  * @date 2019/5/18 15:26
  */
-public class Actor_ {
+public class Actor_ extends Resource{
     private int id;
     private List<Schedule> scheduleList;
 
@@ -18,10 +18,11 @@ public class Actor_ {
         this.scheduleList = scheduleList;
     }
 
+    @Override
     public int getId() {
         return id;
     }
-
+    @Override
     public void setId(int id) {
         this.id = id;
     }

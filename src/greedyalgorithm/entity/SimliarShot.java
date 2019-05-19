@@ -1,4 +1,4 @@
-package greedyAlgorithm.entity;
+package greedyalgorithm.entity;
 
 /**保存两个镜头之间的相似度*/
 public class SimliarShot {

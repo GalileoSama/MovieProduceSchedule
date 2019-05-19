@@ -1,4 +1,4 @@
-package greedyAlgorithm.entity;
+package greedyalgorithm.entity;
 
 
 import dataGenerator.entity.Actor_;

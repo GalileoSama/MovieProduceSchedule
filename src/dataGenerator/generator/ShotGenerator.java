@@ -3,7 +3,7 @@ package dataGenerator.generator;
 import dataGenerator.entity.Actor_;
 import dataGenerator.entity.Tool_;
 import global.GlobalVar;
-import greedyAlgorithm.entity.Shot;
+import greedyalgorithm.entity.Shot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.Random;
  * */
 public class ShotGenerator {
     /**分镜的数量*/
-    private static final int SHOTNUM = 3;
+    private static final int SHOTNUM = 30;
     /**
      * 生成分镜
      * @author Jiangliangzhong
@@ -27,7 +27,14 @@ public class ShotGenerator {
             Shot shot = new Shot();
             shot.setId(n);
             //1.随机生成时长
-            Random random = new Random(1000);//指定种子数字
+            //指定种子数字
+            Random random = new Random(1000);
+            int randTime = random.nextInt(115)+5;
+            if(randTime %5 !=0){
+                randTime = (randTime/5);
+                randTime = (randTime+1)*5;
+            }
+            shot.setTime(randTime);
             //2.随机生成演员数量
             int actorNum = randomOneDigit(0, GlobalVar.ACTORNUM);
             //3.随机抽取演员, 在演员编号范围内

@@ -6,7 +6,7 @@ import java.util.List;
  * @author galileo
  * @date 2019/5/18 15:27
  */
-public class Tool_ {
+public class Tool_ extends  Resource{
     private int id;
     private List<Schedule> scheduleList;
 
@@ -17,11 +17,11 @@ public class Tool_ {
     public void setScheduleList(List<Schedule> scheduleList) {
         this.scheduleList = scheduleList;
     }
-
+    @Override
     public int getId() {
         return id;
     }
-
+    @Override
     public void setId(int id) {
         this.id = id;
     }

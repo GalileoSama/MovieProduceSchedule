@@ -1,11 +1,11 @@
-package greedyAlgorithm.tools;
+package greedyalgorithm.tools;
 
 import dataGenerator.entity.Actor_;
 import dataGenerator.entity.Scene_;
 import dataGenerator.entity.Tool_;
-import greedyAlgorithm.entity.Shot;
-import greedyAlgorithm.entity.SimliarShot;
-import greedyAlgorithm.entity.TimeQuantum;
+import greedyalgorithm.entity.Shot;
+import greedyalgorithm.entity.SimliarShot;
+import greedyalgorithm.entity.TimeQuantum;
 
 import java.util.*;
 
@@ -229,7 +229,7 @@ public class GreedyTools {
             return result;
         }
         //接下来按照关联度来选择
-        while(totalTime > 0){
+        while(totalTime > 0 && shotListOnScene.size()!=0){
             //得到最高关联度的镜头
             SimliarShot simliarShot = calShotAndShotsSimliar(result.get(result.size()-1), shotListOnScene);
             result.add(simliarShot.getShotDest());

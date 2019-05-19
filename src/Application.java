@@ -1,19 +1,22 @@
-import dataGenerator.entity.Scene_;
 import dataGenerator.generator.ShotGenerator;
-import global.GlobalVar;
-import greedyAlgorithm.entity.Shot;
+import dataGenerator.generator.TimeQuantumGenerator;
+import greedyalgorithm.GreedyAlog;
+import greedyalgorithm.entity.Shot;
+import greedyalgorithm.entity.TimeQuantum;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Application {
     public static void main(String[] args) {
-        Scene_ scene_1 = new Scene_();scene_1.setId(1);
-        Scene_ scene_2 = new Scene_();scene_2.setId(1);
-        Set<Scene_> scene_s = new HashSet<>();
-        scene_s.add(scene_1);
-        scene_s.add(scene_2);
-        System.out.println(scene_1.equals( scene_2));
+        TimeQuantumGenerator timeQuantumGenerator = new TimeQuantumGenerator();
+        timeQuantumGenerator.initialSchedule();
+        List<TimeQuantum> timeQuantumList = timeQuantumGenerator.generateTimeQuantum(10);
+        System.out.println(timeQuantumList);
+        ShotGenerator shotGenerator = new ShotGenerator();
+        List<Shot> shotList = shotGenerator.generateShots();
+        System.out.println(shotList);
+        GreedyAlog greedyAlog = new GreedyAlog();
+        greedyAlog.greedyAlog(shotList,timeQuantumList);
+
     }
 }
