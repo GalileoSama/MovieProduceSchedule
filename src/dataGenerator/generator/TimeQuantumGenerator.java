@@ -95,6 +95,24 @@ public class TimeQuantumGenerator {
     }
 
     /**
+     * 第index个电影资源发生突发情况无法获得
+     * @param resource 资源：A,S,T
+     * @param index 编号，从0开始
+     */
+    public void disableMovieResource(String resource, int index){
+        if ("A".equals(resource)){
+            Actor_ actor = actor_list.get(index);
+            actor.setScheduleList(new ArrayList<>());
+        }else if ("S".equals(resource)){
+            Scene_ scene = scene_list.get(index);
+            scene.setScheduleList(new ArrayList<>());
+        }else if ("T".equals(resource)){
+            Tool_ tool = tool_list.get(index);
+            tool.setScheduleList(new ArrayList<>());
+        }
+    }
+
+    /**
      * 初始化演员、道具、场景的使用期
      */
     public void initialSchedule(int time){
