@@ -112,6 +112,43 @@ public class TimeQuantumGenerator {
         }
     }
 
+    public void removeActor(Period_ period,int time){
+        List<Actor_> actorList = period.getActorList();
+        for (Actor_ actor:actorList){
+            List<Schedule> schedules = new ArrayList<>();
+            Schedule schedule = new Schedule();
+            schedule.setStartTime(1);
+            schedule.setEndTime(time);
+            schedules.add(schedule);
+            actor.setScheduleList(schedules);
+        }
+    }
+
+    public void removeScene(Period_ period, int time){
+        List<Scene_> actorList = period.getSceneList();
+        for (Scene_ scene:actorList){
+            List<Schedule> schedules = new ArrayList<>();
+            Schedule schedule = new Schedule();
+            schedule.setStartTime(1);
+            schedule.setEndTime(time);
+            schedules.add(schedule);
+            scene.setScheduleList(schedules);
+        }
+    }
+
+    public void removeTool(Period_ period, int time){
+        List<Tool_> actorList = period.getToolList();
+        for (Tool_ tool:actorList){
+            List<Schedule> schedules = new ArrayList<>();
+            Schedule schedule = new Schedule();
+            schedule.setStartTime(1);
+            schedule.setEndTime(time);
+            schedules.add(schedule);
+            tool.setScheduleList(schedules);
+        }
+    }
+
+
     /**
      * 初始化演员、道具、场景的使用期
      */
