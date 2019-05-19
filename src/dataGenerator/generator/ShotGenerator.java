@@ -14,7 +14,7 @@ import java.util.Random;
  * */
 public class ShotGenerator {
     /**分镜的数量*/
-    private static final int SHOTNUM = 30;
+    private static final int SHOTNUM = 600;
     /**
      * 生成分镜
      * @author Jiangliangzhong

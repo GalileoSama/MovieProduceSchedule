@@ -5,11 +5,15 @@ import dataGenerator.entity.Resource;
 import dataGenerator.entity.Scene_;
 import dataGenerator.entity.Tool_;
 import greedyalgorithm.entity.Shot;
+import greedyalgorithm.entity.ShotResult;
 import greedyalgorithm.entity.TimeQuantum;
 import greedyalgorithm.tools.GreedyTools;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -31,8 +35,8 @@ public class GreedyAlog {
 
 
 
-   public void greedyAlog(List<Shot> shotList, List<TimeQuantum> timeQuantumList) {
-
+   public void greedyAlog(List<Shot> shotList, List<TimeQuantum> timeQuantumList) throws Exception {
+       List<ShotResult> shotResultList = new ArrayList<>();
             for (TimeQuantum timequantumDangtian : timeQuantumList) {
                 //该时间段的演员紧迫程度map
                 Map<Integer, Float> actorMap = new HashMap<>(20);
@@ -90,6 +94,11 @@ public class GreedyAlog {
                 if(dangtianShot.size()==0){
                     System.out.println("天数:"+timequantumDangtian.getDay()+"镜头号：无！");
                 }
+                ShotResult shotResult=new ShotResult();
+                shotResult.setList(dangtianShot);
+                shotResult.setTimeQuantum(timequantumDangtian);
+                shotResultList.add(shotResult);
+
                 dangtianShot.forEach(shot -> System.out.println("天数："+timequantumDangtian.getDay()+"镜头号:"+shot.getId()));
 
                 for (Shot shot : dangtianShot) {
@@ -100,6 +109,7 @@ public class GreedyAlog {
                     break;
                 }
             }
+            stuList2Excel(shotResultList,timeQuantumList);
             if(shotList.size()!=0){
                 shotList.forEach(shot -> System.out.println("时间用完，还有剩余镜头"+shot.getId()+"没拍，拍摄无法完成！"));
             }
@@ -322,8 +332,7 @@ public class GreedyAlog {
      * @author XiangChao
      * @date 2019/5/19_19:46
     */
-    public static String stuList2Excel(List<Shot> shotList,TimeQuantum timeQuantum) throws Exception {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+    public static void stuList2Excel(List<ShotResult> shotResultList,List<TimeQuantum> timeQuantumList) throws Exception {
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd hhmmss");
         Workbook wb = new XSSFWorkbook();
         //标题行抽出字段
@@ -343,24 +352,49 @@ public class GreedyAlog {
             cell.setCellStyle(style);
         }
         //把从数据库中取得的数据一一写入excel文件中
-        final Row row = null;
-        for (int i = 0; i < shotList.size(); i++) {
+         Row row = null;
+        int j=1;
+        for (int i = 0; i < shotResultList.size(); i++) {
             //创建list.size()行数据
-            row = shotSheet.createRow(i + 1);
+            row = shotSheet.createRow(j++);
             //把值一一写进单元格里
             //设置第一列为自动递增的序号
-            row.createCell(0).setCellValue(timeQuantum.getDay());
-            shotList.forEach(shot -> row.createCell(1).setCellValue(shot.getId()));
-            //设置单元格宽度自适应，在此基础上把宽度调至1.5倍
-            for (int i = 0; i < title.length; i++) {
-                shotSheet.autoSizeColumn(i, true);
-                shotSheet.setColumnWidth(i, shotSheet.getColumnWidth(i) * 15 / 10);
+            for(Shot shot:shotResultList.get(i).getList()){
+                row.createCell(0).setCellValue(shotResultList.get(i).getTimeQuantum().getDay());
+                row.createCell(1).setCellValue(shot.getId());
+                row = shotSheet.createRow(j++);
             }
-            //获取配置文件中保存对应excel文件的路径，本地也可以直接写成F：excel/stuInfoExcel路径
-            String folderPath = "C:result/shotExcel";
+
 
         }
+        //设置单元格宽度自适应，在此基础上把宽度调至1.5倍
+        for (int i = 0; i < title.length; i++) {
+            shotSheet.autoSizeColumn(i, true);
+            shotSheet.setColumnWidth(i, shotSheet.getColumnWidth(i) * 15 / 10);
+        }
+        //获取配置文件中保存对应excel文件的路径，本地也可以直接写成F：excel/stuInfoExcel路径
+        String folderPath = "C:\\result\\shotExcel";
+        //创建上传文件目录
+        File folder = new File(folderPath);
+        //如果文件夹不存在创建对应的文件夹
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        //设置文件名
+        String fileName = sdf1.format(new Date()) + sheetName + ".xlsx";
+        String savePath = folderPath + File.separator + fileName;
+        OutputStream fileOut = new FileOutputStream(savePath);
+        wb.write(fileOut);
+        fileOut.close();
+        //返回文件保存全路径
     }
 
+    /**
+     * 将资源存入excel中
+     * @author XiangChao
+     * @date 2019/5/19_21:27
+    */
+    public static void resourceExcel(List<Shot> shotList,List<TimeQuantum> timeQuantumList) throws Exception{
 
+    }
 }

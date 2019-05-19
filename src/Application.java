@@ -7,10 +7,10 @@ import greedyalgorithm.entity.TimeQuantum;
 import java.util.List;
 
 public class Application {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         TimeQuantumGenerator timeQuantumGenerator = new TimeQuantumGenerator();
-        timeQuantumGenerator.initialSchedule();
-        List<TimeQuantum> timeQuantumList = timeQuantumGenerator.generateTimeQuantum(10);
+        timeQuantumGenerator.initialSchedule(2000);
+        List<TimeQuantum> timeQuantumList = timeQuantumGenerator.generateTimeQuantum(2000);
         System.out.println(timeQuantumList);
         ShotGenerator shotGenerator = new ShotGenerator();
         List<Shot> shotList = shotGenerator.generateShots();
