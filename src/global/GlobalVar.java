@@ -23,19 +23,19 @@ public class GlobalVar {
 
     static {
         //生成演员数据
-        for(int i =0;i< 10;i++){
+        for(int i =0;i< ACTORNUM;i++){
             Actor_ actor_ = new Actor_();
             actor_.setId(i);
             actor_list.add(actor_);
         }
         //生成场景数据
-        for(int i =0;i< 5;i++){
+        for(int i =0;i< SCENENUM;i++){
             Scene_ scene_ = new Scene_();
             scene_.setId(i);
             scene_list.add(scene_);
         }
         //生成道具数据
-        for(int i =0;i< 10;i++){
+        for(int i =0;i< TOOLNUM;i++){
             Tool_ tool_ = new Tool_();
             tool_.setId(i);
             tool_list.add(tool_);
