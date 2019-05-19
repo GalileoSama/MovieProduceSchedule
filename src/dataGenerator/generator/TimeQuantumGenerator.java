@@ -88,10 +88,10 @@ public class TimeQuantumGenerator {
     /**
      * 初始化演员、道具、场景的使用期
      */
-    public void initialSchedule(){
+    public void initialSchedule(int time){
         //初始化每个演员的档期
         for (Actor_ actor : actor_list){
-            int scheduleNum = getRandom(20, 10);
+            int scheduleNum = getRandom(time+5, time);
             List<Schedule> schedules = new ArrayList<>();
             int day = 1;
 //            day += getRandom(3, 0);
@@ -103,7 +103,7 @@ public class TimeQuantumGenerator {
                 day += random;
                 schedule.setEndTime(day);
                 //设置不可工作的档期
-                int randomDis = getRandom(3, 1);
+                int randomDis = getRandom(2, 1);
                 day += randomDis;
                 schedules.add(schedule);
             }
@@ -112,7 +112,7 @@ public class TimeQuantumGenerator {
 
         //初始化每个道具的档期
         for (Tool_ tool : tool_list){
-            int scheduleNum = getRandom(20, 10);
+            int scheduleNum = getRandom(time*3 +5, time);
             List<Schedule> schedules = new ArrayList<>();
             int day = 1;
 //            day += getRandom(3, 0);
@@ -124,7 +124,7 @@ public class TimeQuantumGenerator {
                 day += random;
                 schedule.setEndTime(day);
                 //设置不可工作的档期
-                int randomDis = getRandom(3, 1);
+                int randomDis = getRandom(2, 1);
                 day += randomDis;
                 schedules.add(schedule);
             }
@@ -133,7 +133,7 @@ public class TimeQuantumGenerator {
 
         //初始化每个场景的档期
         for (Scene_ scene : scene_list){
-            int scheduleNum = getRandom(20, 10);
+            int scheduleNum = getRandom(time+15, time+5);
             List<Schedule> schedules = new ArrayList<>();
             int day = 1;
 //            day += getRandom(3, 0);
@@ -145,7 +145,7 @@ public class TimeQuantumGenerator {
                 day += random;
                 schedule.setEndTime(day);
                 //设置不可工作的档期
-                int randomDis = getRandom(3, 1);
+                int randomDis = getRandom(2, 1);
                 day += randomDis;
                 schedules.add(schedule);
             }
