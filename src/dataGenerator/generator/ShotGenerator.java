@@ -28,7 +28,7 @@ public class ShotGenerator {
             shot.setId(n);
             //1.随机生成时长
             //指定种子数字
-            Random random = new Random(1000);
+            Random random = new Random();
             int randTime = random.nextInt(115)+5;
             if(randTime %5 !=0){
                 randTime = (randTime/5);

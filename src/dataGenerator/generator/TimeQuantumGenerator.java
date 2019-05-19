@@ -112,8 +112,8 @@ public class TimeQuantumGenerator {
                 day += random;
                 schedule.setEndTime(day);
                 //设置不可工作的档期
-                int randomDis = getRandom(4, 1);
-                day += randomDis;
+//                int randomDis = getRandom(4, 1);
+//                day += randomDis;
                 schedules.add(schedule);
             }
             actor.setScheduleList(schedules);
@@ -133,8 +133,8 @@ public class TimeQuantumGenerator {
                 day += random;
                 schedule.setEndTime(day);
                 //设置不可工作的档期
-                int randomDis = getRandom(4, 1);
-                day += randomDis;
+//                int randomDis = getRandom(4, 1);
+//                day += randomDis;
                 schedules.add(schedule);
             }
             tool.setScheduleList(schedules);
@@ -154,8 +154,8 @@ public class TimeQuantumGenerator {
                 day += random;
                 schedule.setEndTime(day);
                 //设置不可工作的档期
-                int randomDis = getRandom(4, 1);
-                day += randomDis;
+//                int randomDis = getRandom(4, 1);
+//                day += randomDis;
                 schedules.add(schedule);
             }
             scene.setScheduleList(schedules);

@@ -196,6 +196,7 @@ public class GreedyTools {
      * @return 返回这个时间段所选择的分镜
     */
     public static List<Shot> selectShotOnTime(List<Shot> shotListOnScene, Map<Integer, Float> Urgent){
+        System.out.println("开始挑选一天的镜头");
         //以分钟为单位
         int totalTime = 8 * 60;
         //选择出紧迫度最大的分镜
@@ -232,9 +233,18 @@ public class GreedyTools {
         while(totalTime > 0 && shotListOnScene.size()!=0){
             //得到最高关联度的镜头
             SimliarShot simliarShot = calShotAndShotsSimliar(result.get(result.size()-1), shotListOnScene);
+            if(simliarShot.getShotDest()==null){
+                System.err.println("错误：simlai为空");
+            }
             result.add(simliarShot.getShotDest());
             totalTime -= simliarShot.getShotDest().getTime();
             shotListOnScene.remove(simliarShot.getShotDest());
+            if(shotListOnScene.size()==0){
+                System.out.println("当天该场景可拍镜头已经全部选完");
+            }
+            if(totalTime <=0){
+                System.out.println("时间用完l了");
+            }
         }
         return result;
     }

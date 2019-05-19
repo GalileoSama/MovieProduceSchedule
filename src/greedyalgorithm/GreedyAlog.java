@@ -8,6 +8,7 @@ import greedyalgorithm.entity.Shot;
 import greedyalgorithm.entity.ShotResult;
 import greedyalgorithm.entity.TimeQuantum;
 import greedyalgorithm.tools.GreedyTools;
+import org.apache.poi.ss.formula.functions.T;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -36,7 +37,8 @@ public class GreedyAlog {
 
 
    public void greedyAlog(List<Shot> shotList, List<TimeQuantum> timeQuantumList) throws Exception {
-       resourceExcel(shotList,timeQuantumList);
+       resourceExcel(timeQuantumList);
+       fenShotExcel(shotList);
        List<ShotResult> shotResultList = new ArrayList<>();
             for (TimeQuantum timequantumDangtian : timeQuantumList) {
                 //该时间段的演员紧迫程度map
@@ -159,28 +161,39 @@ public class GreedyAlog {
     private List<Shot> chooseScene(List<Shot> shotList, Map<Integer, Float> scenePrioMap, List<Scene_> sceneList, Map<Integer, Float> actorMap, Map<Integer, Float> toolMap, TimeQuantum timequantumDangtian){
         float max=0;
         Scene_ scene1 = new Scene_();
+        List<Shot> dangtianManzuShotlist =GreedyTools.findStatisfyShotOnTimeQuantum(shotList,timequantumDangtian);
+        if(dangtianManzuShotlist.size()==0){
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaa");
+            return new ArrayList<>();
+        }
         for(Scene_ scene :sceneList){
-            if(scenePrioMap.get(scene .getId())>max){
+            List<Shot> list = GreedyTools.findShotOnScene(dangtianManzuShotlist,scene);
+            if(list.size()==0){
+                continue;
+            }
+            System.out.println("优先级数值："+scene.getId()+scenePrioMap.get(scene.getId()));
+            if(scenePrioMap.get(scene.getId())>max){
                 max = scenePrioMap.get(scene .getId());
                 scene1 =scene ;
             }
         }
         if(max==0){
-
             return new ArrayList<>();
         }
-        List<Shot> dangtianManzuShotlist =GreedyTools.findStatisfyShotOnTimeQuantum(shotList,timequantumDangtian);
-        List<Shot> manzuShotlist =GreedyTools.findShotOnScene(dangtianManzuShotlist ,scene1 );
+        List<Shot> manzuShotlist =GreedyTools.findShotOnScene(dangtianManzuShotlist ,scene1);
         //每个镜头的紧迫程度
         Map<Integer,Float> shotMap = new HashMap<>(100);
 
         //计算每个镜头的紧迫度
+        if(manzuShotlist.size()==0){
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        }
         for(Shot shot:manzuShotlist ){
             List<Actor_> actorList =shot.getActorList();
             List<Tool_> toolList =shot.getToolList();
             float totalActorUrgent =0;
             float actorMin =999;
-            float toolActorUrgent =0;
+            float totaltoolUrgent =0;
             float toolMin =999;
             for(Actor_ actor :actorList ){
                 float urgent=actorMap.get(actor .getId());
@@ -191,17 +204,20 @@ public class GreedyAlog {
             }
             for(Tool_ tool :toolList ){
                 float urgent=toolMap.get(tool .getId());
-                toolActorUrgent +=urgent;
+                totaltoolUrgent +=urgent;
                 if(toolMin >urgent){
                     toolMin =urgent;
                 }
             }
-            float shotUrgent = W0/(W6*(totalActorUrgent /actorList .size())+W7*(toolActorUrgent /toolList .size()))+W1/actorMin +W2*toolMin ;
+            float shotUrgent = W0/(W6*(totalActorUrgent /actorList .size())+W7*(totaltoolUrgent /toolList .size()))+W1/actorMin +W2/toolMin ;
             shotMap.put(shot.getId(),shotUrgent);
 
         }
         List<Shot> dangtianPaisheShot;
         dangtianPaisheShot = GreedyTools.selectShotOnTime(manzuShotlist ,shotMap);
+        for(Shot shot:dangtianPaisheShot){
+            System.out.print(shot.getId()+"!");
+        }
         return dangtianPaisheShot;
     }
     /**
@@ -216,13 +232,16 @@ public class GreedyAlog {
             return 0;
         }
         List<Actor_> actorList =GreedyTools.findActorList(avaShotList );
+
         List<Tool_> toolList =GreedyTools.findToolList(avaShotList );
+
+
         float actorTotalUrgent =0;
-        float actorMin =999;
-        float actorAverageUrgent;
+        float actorMin =99999;
+        float actorAverageUrgent=0;
         float toolTotalUrgent =0;
-        float toolMin =999;
-        float toolAverageUrgent;
+        float toolMin =99999;
+        float toolAverageUrgent=0;
         for(Actor_ actor :actorList ){
             float urgent=actorMap.get(actor .getId());
             actorTotalUrgent +=urgent;
@@ -230,7 +249,9 @@ public class GreedyAlog {
                 actorMin =urgent;
             }
         }
-        actorAverageUrgent =actorTotalUrgent /actorList .size();
+        if(actorList.size()!=0) {
+            actorAverageUrgent = actorTotalUrgent / actorList.size();
+        }
         for(Tool_ tool :toolList ){
             float urgent = toolMap.get(tool .getId());
             toolTotalUrgent +=urgent;
@@ -238,10 +259,14 @@ public class GreedyAlog {
                 toolMin =urgent;
             }
         }
-        toolAverageUrgent =toolTotalUrgent /toolList .size();
-
+        if(toolList.size()!=0) {
+            toolAverageUrgent = toolTotalUrgent / toolList.size();
+        }
         float scenePrior ;
-        scenePrior=W0/(W3*actorAverageUrgent +W4*toolAverageUrgent +W5*sceneMap.get(scene.getId()))+W1/actorMin +W2/toolMin ;
+
+        scenePrior = W0 / (W3 * actorAverageUrgent + W4 * toolAverageUrgent + W5 * sceneMap.get(scene.getId())) + W1 / actorMin + W2 / toolMin;
+
+
         return scenePrior ;
 
     }
@@ -395,7 +420,7 @@ public class GreedyAlog {
      * @author XiangChao
      * @date 2019/5/19_21:27
     */
-    private static void resourceExcel(List<Shot> shotList, List<TimeQuantum> timeQuantumList) throws Exception{
+    private static void resourceExcel(List<TimeQuantum> timeQuantumList) throws Exception{
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd hhmmss");
         Workbook wb = new XSSFWorkbook();
         //标题行抽出字段
@@ -416,7 +441,6 @@ public class GreedyAlog {
         }
         //把从数据库中取得的数据一一写入excel文件中
         Row row;
-
         for (int i = 0; i < timeQuantumList.size(); i++) {
             //创建list.size()行数据
             row = shotSheet.createRow(i+1);
@@ -438,14 +462,75 @@ public class GreedyAlog {
                 list2.add(tool.getId());
             }
             row.createCell(3).setCellValue(list2.toString());
-
-
         }
-        //设置单元格宽度自适应，在此基础上把宽度调至1.5倍
-//        for (int i = 0; i < title.length; i++) {
-//            shotSheet.autoSizeColumn(i, true);
-//            shotSheet.setColumnWidth(i, shotSheet.getColumnWidth(i) * 50 / 10);
-//        }
+        //获取配置文件中保存对应excel文件的路径，本地也可以直接写成F：excel/stuInfoExcel路径
+        String folderPath = "C:\\result\\resourceExcel";
+        //创建上传文件目录
+        File folder = new File(folderPath);
+        //如果文件夹不存在创建对应的文件夹
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        //设置文件名
+        String fileName = sdf1.format(new Date()) + sheetName + ".xlsx";
+        String savePath = folderPath + File.separator + fileName;
+        OutputStream fileOut = new FileOutputStream(savePath);
+        wb.write(fileOut);
+        fileOut.close();
+        //返回文件保存全路径
+    }
+    /**
+     * 导出分镜表
+     * @author XiangChao
+     * @date 2019/5/19_22:38
+    */
+    private static void fenShotExcel(List<Shot> shotList) throws Exception{
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd hhmmss");
+        Workbook wb = new XSSFWorkbook();
+
+        //标题行抽出字段
+
+        String[] title= {"编号","时长","演员","道具","场景"};
+        //设置sheet名称，并创建新的sheet对象
+        String sheetName = "分镜资源表";
+        Sheet shotSheet = wb.createSheet(sheetName);
+
+        //获取表头行
+        Row titleRow = shotSheet.createRow(0);
+
+        //创建单元格，设置style居中，字体，单元格大小等
+        CellStyle style = wb.createCellStyle();
+
+        Cell cell;
+
+        //把已经写好的标题行写入excel文件中
+        for (int i = 0; i < title.length; i++) {
+            cell = titleRow.createCell(i);
+            cell.setCellValue(title[i]);
+            cell.setCellStyle(style);
+        }
+
+        //把从数据库中取得的数据一一写入excel文件中
+        Row row;
+        for(int i = 0; i < shotList.size(); i++){
+            //创建list.size()行数据
+            row = shotSheet.createRow(i+1);
+            //把值一一写进单元格里
+            //设置第一列为自动递增的序号
+            row.createCell(0).setCellValue(shotList.get(i).getId());
+            row.createCell(1).setCellValue(shotList.get(i).getTime());
+            List<Integer> list1 = new ArrayList<>();
+            for(Actor_ actor:shotList.get(i).getActorList()){
+                list1.add(actor.getId());
+            }
+            row.createCell(2).setCellValue(list1.toString());
+            List<Integer> list2 = new ArrayList<>();
+            for(Tool_ tool:shotList.get(i).getToolList()){
+                list2.add(tool.getId());
+            }
+            row.createCell(3).setCellValue(list2.toString());
+            row.createCell(4).setCellValue(shotList.get(i).getScene().getId());
+        }
         //获取配置文件中保存对应excel文件的路径，本地也可以直接写成F：excel/stuInfoExcel路径
         String folderPath = "C:\\result\\resourceExcel";
         //创建上传文件目录
