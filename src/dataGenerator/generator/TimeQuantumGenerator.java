@@ -94,7 +94,7 @@ public class TimeQuantumGenerator {
             int scheduleNum = getRandom(20, 10);
             List<Schedule> schedules = new ArrayList<>();
             int day = 1;
-            day += getRandom(3, 0);
+//            day += getRandom(3, 0);
             for (int i = 0;i < scheduleNum; i++){
                 Schedule schedule = new Schedule();
                 //设置可工作档期
@@ -115,7 +115,7 @@ public class TimeQuantumGenerator {
             int scheduleNum = getRandom(20, 10);
             List<Schedule> schedules = new ArrayList<>();
             int day = 1;
-            day += getRandom(3, 0);
+//            day += getRandom(3, 0);
             for (int i = 0;i < scheduleNum; i++){
                 Schedule schedule = new Schedule();
                 //设置可工作档期
@@ -124,7 +124,7 @@ public class TimeQuantumGenerator {
                 day += random;
                 schedule.setEndTime(day);
                 //设置不可工作的档期
-                int randomDis = getRandom(8, 5);
+                int randomDis = getRandom(8, 1);
                 day += randomDis;
                 schedules.add(schedule);
             }
@@ -136,7 +136,7 @@ public class TimeQuantumGenerator {
             int scheduleNum = getRandom(20, 10);
             List<Schedule> schedules = new ArrayList<>();
             int day = 1;
-            day += getRandom(3, 0);
+//            day += getRandom(3, 0);
             for (int i = 0;i < scheduleNum; i++){
                 Schedule schedule = new Schedule();
                 //设置可工作档期
@@ -145,7 +145,7 @@ public class TimeQuantumGenerator {
                 day += random;
                 schedule.setEndTime(day);
                 //设置不可工作的档期
-                int randomDis = getRandom(7, 3);
+                int randomDis = getRandom(7, 1);
                 day += randomDis;
                 schedules.add(schedule);
             }
