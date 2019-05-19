@@ -25,6 +25,7 @@ public class ShotGenerator {
         //每个分镜分别生成
         for(int n = 0;n< SHOTNUM;n++){
             Shot shot = new Shot();
+            shot.setId(n);
             //1.随机生成时长
             Random random = new Random(1000);//指定种子数字
             //2.随机生成演员数量

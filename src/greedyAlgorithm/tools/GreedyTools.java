@@ -4,12 +4,10 @@ import dataGenerator.entity.Actor_;
 import dataGenerator.entity.Scene_;
 import dataGenerator.entity.Tool_;
 import greedyAlgorithm.entity.Shot;
+import greedyAlgorithm.entity.SimliarShot;
 import greedyAlgorithm.entity.TimeQuantum;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**贪婪算法的工具类*/
 public class GreedyTools {
@@ -126,4 +124,119 @@ public class GreedyTools {
         }
         return new ArrayList<>(ToolSet);
     }
+    /**
+     * 计算两个分镜的相似程度
+     * @author Jiangliangzhong
+     * date 2019/5/18 21:15
+    */
+    public static double calShotSimliar(Shot shot1, Shot shot2){
+        //求两个演员list的交集
+        Set<Actor_> mixActorSet = new HashSet<>();
+        Set<Actor_> unionActorSet = new HashSet<>();
+        List<Actor_> actorList1 = shot1.getActorList();
+        List<Actor_> actorList2 = shot2.getActorList();
+        for(int i=0;i<shot1.getActorList().size();i++){
+            for(int j =0;j<shot2.getActorList().size();j++){
+                if(actorList1.get(i).equals(actorList2.get(j))){
+                    mixActorSet.add(actorList1.get(i));
+                }
+            }
+        }
+        //求并集
+        unionActorSet.addAll(actorList1);
+        unionActorSet.addAll(actorList2);
+        double actorSim = (double)mixActorSet.size()/unionActorSet.size();
+        //求两个道具的相似度
+        Set<Tool_> mixToooSet = new HashSet<>();
+        Set<Tool_> unionToolSet = new HashSet<>();
+        List<Tool_> toolList1 = shot1.getToolList();
+        List<Tool_> toolList2 = shot2.getToolList();
+        for(int i=0;i<shot1.getToolList().size();i++){
+            for(int j =0;j<shot2.getToolList().size();j++){
+                if(toolList1.get(i).equals(toolList2.get(j))){
+                    mixToooSet.add(toolList1.get(i));
+                }
+            }
+        }
+        //求并集
+        unionToolSet.addAll(toolList1);
+        unionToolSet.addAll(toolList2);
+        double toolSim = (double)mixToooSet.size()/unionToolSet.size();
+        double toolWeight = 0.5;
+        double actorWeight = 0.5;
+        return toolWeight * toolSim + actorWeight * actorSim;
+    }
+
+    /**
+     * 计算以一个分镜为基准，与分镜之间的相似度,选出相似度最高的分镜
+     * @author Jiangliangzhong
+     * date 2019/5/18 21:31
+    */
+    public  static SimliarShot calShotAndShotsSimliar(Shot shotSrc, List<Shot> shotDestList){
+        SimliarShot simliarShot = new SimliarShot();
+        simliarShot.setShotSrc(shotSrc);
+        simliarShot.setShotDest(shotDestList.get(0));
+        simliarShot.setSimlar(calShotSimliar(shotSrc,shotDestList.get(0)));
+
+        for(int i=1; i< shotDestList.size();i++){
+            double simliar = calShotSimliar(shotSrc, shotDestList.get(i));
+            if(simliar >  simliarShot.getSimlar()){
+                simliarShot.setShotDest(shotDestList.get(i));
+                simliarShot.setSimlar(simliar);
+            }
+        }
+        return simliarShot;
+    }
+    /**
+     * 分镜选择
+     * @author Jiangliangzhong
+     * date 2019/5/18 22:01
+     * @param shotListOnScene 当天时间该场景下的可拍镜头
+     * @param Urgent  每个分镜的紧迫程度
+     * @return 返回这个时间段所选择的分镜
+    */
+    public static List<Shot> selectShotOnTime(List<Shot> shotListOnScene, Map<Integer, Float> Urgent){
+        //以分钟为单位
+        int totalTime = 8 * 60;
+        //选择出紧迫度最大的分镜
+        Set<Integer> keySet = Urgent.keySet();
+        List<Integer> keyList = new ArrayList<>(keySet);
+        int max = keyList.get(0);
+        //得到最大的值
+        for(Integer key:keyList){
+            if(Urgent.get(max)< Urgent.get(key)){
+                max = key;
+            }
+        }
+        List<Shot> result = new ArrayList<>();
+        final int finalmax = max;
+        //挑选起始镜头
+        Shot lastShot=null;
+        for(Shot shot:shotListOnScene){
+            if(shot.getId()==finalmax){
+                lastShot=shot;
+            }
+        }
+        if(lastShot == null){
+            System.err.println("错误：无法找到紧迫度最大的shot");
+            return null;
+        }
+        result.add(lastShot);
+        totalTime -= lastShot.getTime();
+        shotListOnScene.remove(lastShot);
+        //不能超过8小时
+        if(totalTime <0){
+            return result;
+        }
+        //接下来按照关联度来选择
+        while(totalTime > 0){
+            //得到最高关联度的镜头
+            SimliarShot simliarShot = calShotAndShotsSimliar(result.get(result.size()-1), shotListOnScene);
+            result.add(simliarShot.getShotDest());
+            totalTime -= simliarShot.getShotDest().getTime();
+            shotListOnScene.remove(simliarShot.getShotDest());
+        }
+        return result;
+    }
+
 }
