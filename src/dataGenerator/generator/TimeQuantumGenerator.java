@@ -35,6 +35,9 @@ public class TimeQuantumGenerator {
                 List<Schedule> scheduleList = actor.getScheduleList();
                 //检查是否有档期
                 for (Schedule schedule : scheduleList){
+                    if(schedule.getStartTime() > day){
+                        break;
+                    }
                     if (schedule.containDay(today)){
                         actorList.add(actor);
                         break;
@@ -48,6 +51,9 @@ public class TimeQuantumGenerator {
                 List<Schedule> scheduleList = tool.getScheduleList();
                 //检查是否有档期
                 for (Schedule schedule : scheduleList){
+                    if(schedule.getStartTime() > day){
+                        break;
+                    }
                     if (schedule.containDay(today)){
                         toolList.add(tool);
                         break;
@@ -61,6 +67,9 @@ public class TimeQuantumGenerator {
                 List<Schedule> scheduleList = scene.getScheduleList();
                 //检查是否有档期
                 for (Schedule schedule : scheduleList){
+                    if(schedule.getStartTime() > day){
+                        break;
+                    }
                     if (schedule.containDay(today)){
                         sceneList.add(scene);
                         break;
@@ -103,7 +112,7 @@ public class TimeQuantumGenerator {
                 day += random;
                 schedule.setEndTime(day);
                 //设置不可工作的档期
-                int randomDis = getRandom(2, 1);
+                int randomDis = getRandom(2, 0);
                 day += randomDis;
                 schedules.add(schedule);
             }
@@ -124,7 +133,7 @@ public class TimeQuantumGenerator {
                 day += random;
                 schedule.setEndTime(day);
                 //设置不可工作的档期
-                int randomDis = getRandom(2, 1);
+                int randomDis = getRandom(2, 0);
                 day += randomDis;
                 schedules.add(schedule);
             }
@@ -145,7 +154,7 @@ public class TimeQuantumGenerator {
                 day += random;
                 schedule.setEndTime(day);
                 //设置不可工作的档期
-                int randomDis = getRandom(2, 1);
+                int randomDis = getRandom(2, 0);
                 day += randomDis;
                 schedules.add(schedule);
             }
