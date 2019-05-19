@@ -2,7 +2,6 @@ package global;
 
 import dataGenerator.entity.Actor_;
 import dataGenerator.entity.Scene_;
-import dataGenerator.entity.Shot_;
 import dataGenerator.entity.Tool_;
 
 import java.util.ArrayList;
@@ -16,11 +15,11 @@ public class GlobalVar {
     public static List<Scene_> scene_list=new ArrayList<>();
     public static List<Tool_> tool_list=new ArrayList<>();
     /**演员数量*/
-    public static final int ACTORNUM = 10;
+    public static final int ACTORNUM = 6;
     /**场景数量*/
     public static final int SCENENUM = 5;
     /**道具数量*/
-    public static final int TOOLNUM = 10;
+    public static final int TOOLNUM = 2;
 
     static {
         //生成演员数据
