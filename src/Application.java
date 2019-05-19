@@ -18,5 +18,8 @@ public class Application {
         System.out.println(shotList);
         GreedyAlog greedyAlog = new GreedyAlog();
         greedyAlog.greedyAlog(shotList,timeQuantumList);
+
+        List<TimeQuantum> timeQuantumList1 = timeQuantumList;
+        timeQuantumGenerator.removeActor();
     }
 }
