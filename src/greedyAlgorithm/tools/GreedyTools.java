@@ -199,9 +199,44 @@ public class GreedyTools {
         //以分钟为单位
         int totalTime = 8 * 60;
         //选择出紧迫度最大的分镜
-        for(Shot shot:shotListOnScene){
-//            Urgent
+        Set<Integer> keySet = Urgent.keySet();
+        List<Integer> keyList = new ArrayList<>(keySet);
+        int max = keyList.get(0);
+        //得到最大的值
+        for(Integer key:keyList){
+            if(Urgent.get(max)< Urgent.get(key)){
+                max = key;
+            }
         }
-        return null;
+        List<Shot> result = new ArrayList<>();
+        final int finalmax = max;
+        //挑选起始镜头
+        Shot lastShot=null;
+        for(Shot shot:shotListOnScene){
+            if(shot.getId()==finalmax){
+                lastShot=shot;
+            }
+        }
+        if(lastShot == null){
+            System.err.println("错误：无法找到紧迫度最大的shot");
+            return null;
+        }
+        result.add(lastShot);
+        totalTime -= lastShot.getTime();
+        shotListOnScene.remove(lastShot);
+        //不能超过8小时
+        if(totalTime <0){
+            return result;
+        }
+        //接下来按照关联度来选择
+        while(totalTime > 0){
+            //得到最高关联度的镜头
+            SimliarShot simliarShot = calShotAndShotsSimliar(result.get(result.size()-1), shotListOnScene);
+            result.add(simliarShot.getShotDest());
+            totalTime -= simliarShot.getShotDest().getTime();
+            shotListOnScene.remove(simliarShot.getShotDest());
+        }
+        return result;
     }
+
 }
